@@ -18,7 +18,7 @@ ReduceDim <- read.csv('/data/simulation/gene10000/sim_ieffect5_STAGATE_pyG.csv',
 location <- read.csv('/data/simulation/gene10000/sp_sim_location.csv',header = TRUE,row.names=1)
 
 #Hierarchical clustering
-MOB.SNN <- SNN.Construction(ReduceDim, k = 25, threshold = 1/15)  ###n2000以下
+MOB.SNN <- SNN.Construction(ReduceDim, k = 25, threshold = 1/15)  
 MOB.ClusteringTree <- HGC.dendrogram(G = MOB.SNN)
 
 hier_clus2 <- cutree(MOB.ClusteringTree, k = 2)
