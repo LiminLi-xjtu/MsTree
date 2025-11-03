@@ -7,14 +7,14 @@ library(HGC)
 
 ##Multi-scale spatial tree
 #embedding
-use_condaenv("STAGATE3.9")
-source_python("/home/STAGATE_pyG-main/STAGATE_2D.py")
+use_condaenv("ENV")
+source_python("/home/RUN_GNMF.py")
 
 
 sp_sim_count <- read.csv('/data/simulation/gene10000/sp_sim_count_ieffect5.csv',header = TRUE,row.names=1)
 sp_sim_count <- as.matrix(sp_sim_count)
 
-ReduceDim <- read.csv('/data/simulation/gene10000/sim_ieffect5_STAGATE_pyG.csv',header = TRUE,row.names=1)
+ReduceDim <- read.csv('/data/simulation/gene10000/sp_sim_ieffect5_embedding.csv',header = TRUE,row.names=1)
 location <- read.csv('/data/simulation/gene10000/sp_sim_location.csv',header = TRUE,row.names=1)
 
 #Hierarchical clustering
@@ -69,8 +69,8 @@ for (k in 1:dim(sp_sim_count)[1]) {
     }else if(AllEqual(count_cluster) & AllEqual(count_neigh)){
       p[i,1] <- 0
     } else {
-      ttest <- t.test(count_cluster, count_neigh)
-      p[i,1] <- ttest[["p.value"]]
+      wilcox <- wilcox.test(count_cluster, count_neigh, alternative = "two.sided")
+      p[i,1] <- wilcox[["p.value"]]
     }
     
     temp_layer <- layer
@@ -101,8 +101,8 @@ for (k in 1:dim(sp_sim_count)[1]) {
           }else if(AllEqual(count_neigh) & AllEqual(count_contain)){
             p[i,n] <- 0
           } else {
-            ttest <- t.test(count_neigh, count_contain)
-            p[i,n] <- ttest[["p.value"]]
+            wilcox <- wilcox.test(count_contain, count_neigh, alternative = "two.sided")
+            p[i,n] <- wilcox[["p.value"]]
           }
           
         } 
@@ -133,3 +133,4 @@ for (k in 1:dim(sp_sim_count)[1]) {
 
 
 Cauchy2 <- p.adjust(Cauchy1, method = "holm", n = length(Cauchy1))
+
