@@ -1,7 +1,7 @@
 # MsTree
 
 MsTree is a method for identifying spatially variable genes.
-![](https://github.com/LiminLi-xjtu/MsTree/blob/master/schematic%20representation.jpg)
+![](https://github.com/LiminLi-xjtu/MsTree/blob/master/Schematic%20Representation.jpg)
 
 
 #### Usage
